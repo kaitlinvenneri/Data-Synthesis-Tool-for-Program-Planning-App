@@ -1,0 +1,26 @@
+plugins {
+    id 'application'
+}
+apply plugin: 'java'
+ext {
+    javaMainClass = "dataSynthesisApp.Main"
+}
+
+application {
+    mainClassName = javaMainClass
+}
+run{
+    standardInput = System.in
+}
+
+sourceCompatibility = 1.11
+targetCompatibility = 1.11
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testImplementation('junit:junit:4.13')
+}
+
