@@ -55,18 +55,26 @@ public class CreateTranscriptMenuOption implements MenuOption {
         InputHandler inputHandler = new InputHandler();
         String transcriptName;
         String numCoursesString;
+        int numberOfTranscriptCourses = 0;
+        int numberOfSavedCourses;
 
         System.out.println("Please enter the filename of the transcript you would like to generate (i.e. \"My Transcript\"):");
         transcriptName = inputHandler.getInput();
 
-        System.out.println("Please enter the number of courses you would like to add to this transcript:");
-        numCoursesString = inputHandler.getInput();
+        numberOfSavedCourses = DataUtility.getNumberOfSavedCourses();
 
-        //TODO:
-        // Error handle if user inputs non-numeric value for numCourses
-        // Error handle if the user inputs a value greater than the number of courses in courselist.csv
+        while(numberOfTranscriptCourses < 1 || numberOfTranscriptCourses > numberOfSavedCourses){
+            System.out.println("Please enter the number of courses you would like to add to this transcript (must be in the range of 1 to " + numberOfSavedCourses + "):");
+            numCoursesString = inputHandler.getInput();
 
-        generateTranscript(transcriptName, Integer.parseInt(numCoursesString));
+            numberOfTranscriptCourses = Integer.parseInt(numCoursesString);
+
+            if(numberOfTranscriptCourses < 1 || numberOfTranscriptCourses > numberOfSavedCourses){
+                System.out.println("You entered a number of courses outside of the range.");
+            }
+        }
+
+        generateTranscript(transcriptName, numberOfTranscriptCourses);
 
         System.out.println("\nTranscript has been written to " + transcriptName + ".csv in the resources folder.");
 

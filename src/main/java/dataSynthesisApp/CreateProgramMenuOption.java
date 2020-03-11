@@ -55,18 +55,26 @@ public class CreateProgramMenuOption implements MenuOption {
         InputHandler inputHandler = new InputHandler();
         String programName;
         String numCoursesString;
+        int numberOfSavedCourses;
+        int numberOfProgramCourses = 0;
 
-        System.out.println("Please enter the name of the program you would like to generate:");
+        System.out.println("Please enter the name of the program you would like to generate (i.e. \"My Program\"):");
         programName = inputHandler.getInput();
 
-        System.out.println("Please enter the number of courses you would like to add to this program:");
-        numCoursesString = inputHandler.getInput();
+        numberOfSavedCourses = DataUtility.getNumberOfSavedCourses();
 
-        //TODO:
-        // Error handle if user inputs non-numeric value for numCourses
-        // Error handle if the user inputs a value greater than the number of courses in courselist.csv
+        while(numberOfProgramCourses < 1 || numberOfProgramCourses > numberOfSavedCourses){
+            System.out.println("Please enter the number of courses you would like to add to this program (must be in the range of 1 to " + numberOfSavedCourses + "):");
+            numCoursesString = inputHandler.getInput();
 
-        generateProgram(programName, Integer.parseInt(numCoursesString));
+            numberOfProgramCourses = Integer.parseInt(numCoursesString);
+
+            if(numberOfProgramCourses < 1 || numberOfProgramCourses > numberOfSavedCourses){
+                System.out.println("You entered a number of courses outside of the range.");
+            }
+        }
+
+        generateProgram(programName, numberOfProgramCourses);
 
         parentMenu.handleMenu();
     }

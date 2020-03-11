@@ -11,6 +11,12 @@ public final class DataUtility {
         //not called
     }
 
+    public static int getNumberOfSavedCourses() {
+        ArrayList<AdminCourse> savedCourse = getStoredAdminCourses();
+        return savedCourse.size();
+    }
+
+
     /**
      * Get the filename of where the admin courses are currently saved.
      *
